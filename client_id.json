@@ -1,0 +1,13 @@
+{
+	"installed" : 
+	{
+		"client_id":"268164400491-3gkef9en1urltrafamt2n9k7jmj0gpgc.apps.googleusercontent.com",
+		"project_id":"git-talk-219600",
+		"auth_uri":"https://accounts.google.com/o/oauth2/auth",
+		"token_uri":"https://www.googleapis.com/oauth2/v3/token",
+		"auth_provider_x509_cert_url":"https://www.googleapis.com/oauth2/v1/certs",
+		"client_secret":"g_aLEJ3YjQCNbbj2h09ifVdT",
+		"redirect_uris":["urn:ietf:wg:oauth:2.0:oob",
+		"http://localhost"]
+	}
+}
