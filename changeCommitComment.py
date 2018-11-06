@@ -7,5 +7,9 @@ os.system("git push")
 
 time.sleep(10)
 
-os.system("git commit --amend -m \"youtubeLink\"")
+youtubeLinkId = ""
+completeYoutubeLink = "https://www.youtube.com/watch?v=" + youtubeLinkId
+print(completeYoutubeLink)
+
+os.system("git commit --amend -m " + completeYoutubeLink)
 os.system("git push --force")
