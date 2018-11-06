@@ -1,8 +1,9 @@
 from subprocess import Popen, PIPE
 
 app = "Terminal"
-
+file = "newRecording.mov"
 record = '''
+    set fileName to (path to desktop as text) & "{0}"
     tell application "QuickTime Player"
         activate
         set sr to new screen recording
@@ -10,15 +11,14 @@ record = '''
         repeat while exists sr
             delay 1
         end repeat
-        set fileName to (path to desktop as text) & "newRecording.mov"
         open for access file fileName
-        tell last item of documents
+        tell first document
             export in fileName using settings preset "720p"
-            close
+            close saving no
         end tell
-        return fileName
     end tell
-  ''' 
+    return fileName
+  '''.format(file)
 
 proc = Popen(['osascript', '-'], stdin=PIPE, stdout=PIPE, stderr=PIPE, universal_newlines=True)
 result, error = proc.communicate(record)
