@@ -136,7 +136,7 @@ def resumable_upload(insert_request):
       print "Uploading file..."
       status, response = insert_request.next_chunk()
       if 'id' in response:
-        print "Video id '%s' was successfully uploaded." % response['id']
+        print "https://www.youtube.com/watch?v=" + response['id']
       else:
         exit("The upload failed with an unexpected response: %s" % response)
     except HttpError, e:
@@ -158,7 +158,7 @@ def resumable_upload(insert_request):
       sleep_seconds = random.random() * max_sleep
       print "Sleeping %f seconds and then retrying..." % sleep_seconds
       time.sleep(sleep_seconds)
-
+	  
 
 
 ##################################################################################	
@@ -181,6 +181,8 @@ if __name__ == '__main__':
 
   youtube = get_authenticated_service(args)
   try:
-    initialize_upload(youtube, args)
+	resp = initialize_upload(youtube, args)
   except HttpError, e:
     print "An HTTP error %d occurred:\n%s" % (e.resp.status, e.content)
+	
+  
