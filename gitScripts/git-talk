@@ -1,0 +1,19 @@
+#!/bin/sh
+
+# SETUP: put this file and python script in a directory (i.e. Documents/gitScripts)
+# Add a line with this directory to PATH (.bash_profile for Macs):
+# For example, add this: export PATH="/Users/Nancy/Documents/gitScripts:$PATH"
+# In directory, set permissions to execute by calling "chmod 555"
+# TO CALL: git talk "commit message goes here"
+
+commitMessage=$1
+test -z "$commitMessage" && echo "ERROR: Please provide a commit message." 1>&2 && exit 1
+
+# Run python script for Quicktime
+echo "Running python script to start QuickTime screen recording..."
+dir=$(dirname $0)
+python $dir/test.py
+
+# Git commit
+echo "Running git commit with message:" $commitMessage
+git commit -m "$commitMessage"
