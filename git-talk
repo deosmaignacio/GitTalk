@@ -1,0 +1,31 @@
+#!/bin/sh
+
+# SETUP:
+# Add a line with directory containing this file and python script to PATH (.bash_profile for Macs):
+# For example, add this: export PATH="/Users/Nancy/Documents/GitTalk:$PATH"
+# Apply changes "source ~/.bash_profile" /restart terminal
+# In directory, set permissions to execute by calling "chmod 555 *"
+# TO CALL: git talk "commit message goes here"
+
+commitMessage=$1
+test -z "$commitMessage" && echo "ERROR: Please provide a commit message." 1>&2 && exit 1
+dir=$(dirname $0)
+
+
+# Run python script for Quicktime - get filepath
+echo "\nRunning script to start QuickTime screen recording..."
+filePath=$(python $dir/QuicktimeAutomation.py)
+echo $filePath
+sleep 5
+
+# Run python script for YouTube upload
+echo "\nRunning script to upload to YouTube..." 
+testPath=/Users/Nancy/Documents/test.mov
+youtubeLink=$(python $dir/upload.py --file "$filePath" --title "$commitMessage")
+echo $youtubeLink
+
+
+# Git commit including YouTube link
+newCommitMessage="$commitMessage ... YouTube link: $youtubeLink"
+echo "\nRunning git commit with message... \n$newCommitMessage \n"
+git commit -m "$newCommitMessage"

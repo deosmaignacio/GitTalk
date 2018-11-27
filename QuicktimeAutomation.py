@@ -1,7 +1,7 @@
 from subprocess import Popen, PIPE
 
 app = "Terminal"
-file = "newRecording.mov"
+file = "commit_video.mov"
 record = '''
     set fileName to (path to desktop as text) & "{0}"
     tell application "QuickTime Player"
@@ -23,4 +23,5 @@ record = '''
 proc = Popen(['osascript', '-'], stdin=PIPE, stdout=PIPE, stderr=PIPE, universal_newlines=True)
 result, error = proc.communicate(record)
 filepath = result.replace(":","/")
+filepath = filepath.split("Macintosh HD")[1]
 print(filepath)

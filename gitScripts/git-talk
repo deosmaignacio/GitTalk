@@ -9,11 +9,19 @@
 commitMessage=$1
 test -z "$commitMessage" && echo "ERROR: Please provide a commit message." 1>&2 && exit 1
 
-# Run python script for Quicktime
-echo "Running python script to start QuickTime screen recording..."
+# Run python script for Quicktime - get filepath
+echo "Running QuicktimeAutomation.py script to start QuickTime screen recording..."
 dir=$(dirname $0)
-python $dir/test.py
+filePath=$(python $(dirname "$dir")/QuicktimeAutomation.py)
+testPath=/Users/Nancy/Documents/test.mov
+echo "FILE PATH RETURNED:" $testPath
 
-# Git commit
-echo "Running git commit with message:" $commitMessage
-git commit -m "$commitMessage"
+# Run python script for YouTube upload
+echo "Running upload.py script to upload to YouTube" 
+$(python $dir/../upload.py --file $testPath --title $commitMessage)
+# echo $youtubeLink
+
+# Git commit including YouTube link
+# newCommitMessage="$commitMessage \nYouTube link: $youtubeLink"
+echo "Running git commit with message:\n" $newCommitMessage
+# git commit -m "$newCommitMessage"

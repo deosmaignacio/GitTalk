@@ -121,8 +121,8 @@ def initialize_upload(youtube, options):
     media_body=MediaFileUpload(options.file, chunksize=-1, resumable=True)
   )
 
-  resumable_upload(insert_request)
-
+  youtubeLink = resumable_upload(insert_request)
+  return youtubeLink
   
 ##################################################################################	
 # This method implements an exponential backoff strategy to resume a
@@ -133,10 +133,12 @@ def resumable_upload(insert_request):
   retry = 0
   while response is None:
     try:
-      print "Uploading file..."
+      # print "Uploading file..."
       status, response = insert_request.next_chunk()
       if 'id' in response:
-        print "https://www.youtube.com/watch?v=" + response['id']
+        # print "https://www.youtube.com/watch?v=" + response['id']
+        youtubeLink = "https://www.youtube.com/watch?v=" + response['id']
+        # print(youtubeLink)
       else:
         exit("The upload failed with an unexpected response: %s" % response)
     except HttpError, e:
@@ -158,7 +160,9 @@ def resumable_upload(insert_request):
       sleep_seconds = random.random() * max_sleep
       print "Sleeping %f seconds and then retrying..." % sleep_seconds
       time.sleep(sleep_seconds)
-	  
+	
+  if youtubeLink:
+    return youtubeLink  
 
 
 ##################################################################################	
@@ -182,7 +186,8 @@ if __name__ == '__main__':
   youtube = get_authenticated_service(args)
   try:
 	resp = initialize_upload(youtube, args)
+
   except HttpError, e:
     print "An HTTP error %d occurred:\n%s" % (e.resp.status, e.content)
-	
-  
+
+  print resp
